@@ -3,6 +3,7 @@ import numpy as np
 import urllib.request
 import os
 
+# Training positive images
 images_link = 'http://www.image-net.org/api/text/imagenet.synset.geturls?wnid=n03467984'
 images_urls = urllib.request.urlopen(images_link).read().decode()
 pic_num = 1

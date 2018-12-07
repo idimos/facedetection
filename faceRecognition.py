@@ -9,9 +9,9 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 #iniciate id counter
 id = 0
 # names related to ids: example ==> Yannis: id=1,  etc
-names = ['None', 'John']
+names = ['None', 'John', 'George','Socrates','Miltiadis']
 # Initialize and start realtime video capture
-cam = cv2.VideoCapture(0)
+cam = cv2.VideoCapture(1)
 cam.set(3, 640) # set video widht
 cam.set(4, 480) # set video height
 # Define min window size to be recognized as a face
@@ -19,7 +19,7 @@ minW = 0.1*cam.get(3)
 minH = 0.1*cam.get(4)
 while True:
     ret, img =cam.read()
-    #img = cv2.flip(img, -1) # Flip vertically
+    img = cv2.flip(img, 1) # Flip vertically
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     
     faces = faceCascade.detectMultiScale( 
@@ -32,6 +32,7 @@ while True:
         cv2.rectangle(img, (x,y), (x+w,y+h), (0,255,0), 2)
         id, confidence = recognizer.predict(gray[y:y+h,x:x+w])
         # Check if confidence is less them 100 ==> "0" is perfect match 
+        print(id)
         if (confidence < 100):
             id = names[id]
             confidence = "  {0}%".format(round(100 - confidence))

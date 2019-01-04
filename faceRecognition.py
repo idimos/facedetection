@@ -9,7 +9,7 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 #iniciate id counter
 id = 0
 # names related to ids: example ==> Yannis: id=1,  etc
-names = ['None', 'John', 'George','Socrates']
+names = ['None', 'Yannis', 'George','Socrates']
 # Initialize and start realtime video capture
 cam = cv2.VideoCapture(0)
 cam.set(3, 640) # set video widht
@@ -31,8 +31,7 @@ while True:
     for(x,y,w,h) in faces:
         cv2.rectangle(img, (x,y), (x+w,y+h), (0,255,0), 2)
         id, confidence = recognizer.predict(gray[y:y+h,x:x+w])
-        print(id,confidence);
-        # Check if confidence is less them 100 ==> "0" is perfect match 
+        # Check if confidence is less them 100 ==> "0" is perfect match
         print(id)
         if (confidence < 100):
             id = names[id]

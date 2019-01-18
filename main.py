@@ -17,8 +17,10 @@ ultrasonicRight = DistanceSensor(echo=22,trigger=23)
 def initialisation():
     print("Terminator project")
 
+def main():
+    initialisation()
 
 if __name__ == "__main":
-    initialisation()
     while True:
-        print(ultrasonicLeft)
+        # print(ultrasonicLeft)
+        print("1")

@@ -1,11 +1,12 @@
-import os,time, keyword
+import os,time, keyboard
 import pyttsx3
+
 
 def speakfile(fn):
     global engine
     f = open(fn,"r")
     lines = [l for l in f.readlines()]
-    print(lines)
+
     for l in lines:
         print(l)
         engine.say(l)
@@ -13,6 +14,7 @@ def speakfile(fn):
     f.close()
 def onStart(name):
     print('starting',name)
+
 
 engine = pyttsx3.init()
 engine.connect('finished-utterance',onStart)

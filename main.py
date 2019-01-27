@@ -1,26 +1,19 @@
 import time
-from gpiozero import DistanceSensor
+from labmodules import terminator
+from labmodules import logger
+# from labmodules import distanceSensors
 
-# define pins
-HCSR04_1_PIN_TRIG = 17
-HCSR04_1_PIN_ECHO = 4
-HCSR04_2_PIN_TRIG = 27
-HCSR04_2_PIN_ECHO = 18
-HCSR04_3_PIN_TRIG = 23
-HCSR04_3_PIN_ECHO = 22
-SERVO360_PIN_SIG = 24
-
-ultrasonicLeft  = DistanceSensor(echo=4,trigger=17)
-ultrasonicFront = DistanceSensor(echo=18,trigger=27)
-ultrasonicRight = DistanceSensor(echo=22,trigger=23)
-
-def initialisation():
-    print("Terminator project")
+log = logger.Log(__name__)
 
 def main():
-    initialisation()
+    try:
+        log.cout('Powering on the Robot!')
+        robot = terminator.Terminator()
+        robot.greetings()
+        robot.run()
+    except:
+        log.cout("Initialasation error")
 
-if __name__ == "__main":
-    while True:
-        # print(ultrasonicLeft)
-        print("1")
+if __name__ == "__main__":
+    main()
+

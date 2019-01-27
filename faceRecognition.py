@@ -8,7 +8,7 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 #iniciate id counter
 id = 0
 # names related to ids: example ==> Yannis: id=1,  etc
-names = ['None', 'Yannis', 'George','Zoe','Mirto']
+names = ['None', 'Yannis', 'George','Zoe','Mirto','Miltiades','Socrates']
 # Initialize and start realtime video capture
 cam = cv2.VideoCapture(0)
 cam.set(3, 640) # set video widht
@@ -35,6 +35,7 @@ while True:
         # Check if confidence is less them 100 ==> "0" is perfect match
         if (confidence < 100):
             id = names[id]
+            
             confidence = "  {0}%".format(round(100 - confidence))
         else:
             id = "unknown"

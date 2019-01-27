@@ -1,20 +1,12 @@
-<<<<<<< HEAD
 import os
 import keyboard
-=======
-import os,time, keyboard
->>>>>>> e4b5ed93e3ebf95a8197c537ea5cabdccde34599
 import pyttsx3
 
-
+ 
 def speakfile(fn):
     global engine
     f = open(fn,"r")
     lines = [l for l in f.readlines()]
-<<<<<<< HEAD
-=======
-
->>>>>>> e4b5ed93e3ebf95a8197c537ea5cabdccde34599
     for l in lines:
         keyboard.write(l)
         engine.say(l)

@@ -4,6 +4,7 @@ import keyboard, random
 
 def fileToSound(filename,person):
     f = open(filename)
+    print(filename)
     textlines = [line for line in f.readlines()]
     for line in textlines:
         engine.say( line+person)

@@ -10,7 +10,8 @@ class LabSound:
             self.engine = speake3.Speake() # Initialize the speake engine
             self.engine.set('voice', 'en-us')
             self.engine.set('speed', '130')
-            self.engine.set('pitch', '30')
+            self.engine.set('volume', '100')
+            self.engine.set('pitch', '40')
             logger.log.cout('... done!')
         except:
             logger.log.cout("Sound creation ERROR")

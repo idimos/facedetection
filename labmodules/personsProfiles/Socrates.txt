@@ -1,2 +1,7 @@
-name#Socratis
+name#Socrates
 surname#Mantes
+job#student
+age#16
+team#Olympiakos
+friends#George
+city#Lamia

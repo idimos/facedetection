@@ -1,34 +1,16 @@
 from labmodules import logger
 from labmodules import sound
-import cv2, time,os
-from imutils.video import FPS
-import numpy as np
-import imutils
+from labmodules.videocaptureasync import VideoCaptureAsync
+import cv2, time, os
 
 class Terminator:
     '''The robot created by LabSTEM called Terminator'''
 
-    # def SaySomething(id):
-    #     global engine
-    #     path = 'speaking/textFiles'
-    #     textfiles = [os.path.join( path, fl ) for fl in os.listdir( path )]
-    #     facename = os.path.join( path, id + ".txt" )
-    #     print( facename )
-    #     for fl in textfiles:
-    #         if fl == facename:
-    #             f = open( facename, "r" )
-    #             lines = [l for l in f.readlines()]
-    #
-    #             for l in lines:
-    #                 print( l )
-    #                 engine.say( l )
-    #                 engine.runAndWait()
-    #             f.close()
-    #
-
     def salute(self,p):
         logger.log.cout(self.profiles[p]['name'])
         sound.robotVoice.say('Hello mister {0} {1}'.format(self.profiles[p]['name'],self.profiles[p]['surname']))
+        sound.robotVoice.say('You are a {0} and you are {1} years old'.format(self.profiles[p]['job'],self.profiles[p]['age']))
+        sound.robotVoice.say('Your favourit team is {0} and you live at {1}'.format(self.profiles[p]['team'],self.profiles[p]['city']))
         
     def loadProfiles(self):
         try:
@@ -38,7 +20,7 @@ class Terminator:
 
             for fn in self.profileFiles:
                 f = open( fn, "r" )
-                self.lines = [l for l in f.readlines()]
+                self.lines = [l.rstrip() for l in f.readlines()]
                 self.profileInfo = dict()
                 
                 for ln in self.lines:
@@ -48,7 +30,7 @@ class Terminator:
         except:
             logger.log.cout("loading profiles error")
         else:
-            logger.log.cout("Profiles loaded succesfully!")        
+            logger.log.cout("Profiles loaded succesfully!")
             
     def personExists(self,p):
         '''True, if person p exists into profiles Dictionary'''
@@ -80,14 +62,14 @@ class Terminator:
             # names related to ids: example ==> Yannis: id=1,  etc
             self.names = ['None', 'Yannis', 'George','Miltiades','Socrates','Stefanos']
             # Initialize and start realtime video capture
-            self.cam = cv2.VideoCapture( src )
-            self.cam.set( 3, 640 )  # set video widht
-            self.cam.set( 4, 480 )  # set video height
-            self.fps = FPS().start()
+            self.cam = VideoCaptureAsync( src )
+            #self.cam.set( 3, 640 )  # set video widht
+            #self.cam.set( 4, 480 )  # set video height
+            self.cam.start()
             logger.log.cout(" ... Camera ok")
             # Define min window size to be recognized as a face
-            self.minW = 0.1 * self.cam.get( 3 )
-            self.minH = 0.1 * self.cam.get( 4 )
+            self.minW = 0.1 * self.cam.cap.get( 3 )
+            self.minH = 0.1 * self.cam.cap.get( 4 )
         except Exception as e:
             logger.log.cout("Robot Creation ERROR [{0}]".format(e))
             exit(1)
@@ -102,10 +84,9 @@ class Terminator:
     def run(self):
         try:
             while True:
-                ret, img = self.cam.read()
+                _, img = self.cam.read()
                 img = cv2.flip( img, 1 )  # Flip vertically
                 gray = cv2.cvtColor( img, cv2.COLOR_BGR2GRAY )
-                #gray = np.dstack([gray, gray, gray])
 
                 self.faces = self.faceCascade.detectMultiScale(
                     gray,
@@ -132,19 +113,14 @@ class Terminator:
                     logger.log.cout( "Robot captured face of [{0}]".format(self.id) )
                     cv2.putText( img, str( self.id ), (x + 5, y - 5), self.font, 1, (255, 255, 255), 2 )
                     cv2.putText( img, str( self.confidence ), (x + 5, y + h - 5), self.font, 1, (255, 255, 0), 1 )
-                cv2.putText( img, "LabSTEM Robotics", (10, int( self.cam.get( 4 ) ) - 15), self.font, 1, (255, 255, 255), 2 )
+                cv2.putText( img, "LabSTEM Robotics", (10, int( self.cam.cap.get( 4 ) ) - 15), self.font, 1, (255, 255, 255), 2 )
 
-                #cv2.imshow( 'LabSTEM Robotics, Terminator camera', img )
+                cv2.imshow( 'LabSTEM Robotics, Terminator camera', img )
                 k = cv2.waitKey( 1 ) & 0xff  # Press 'ESC' for exiting video
                 if k == 27:
                     break
-                self.fps.update()
         except Exception as e:
             logger.log.cout("[ERROR] camera capturing [{0}]".format(e))
         finally:
-            # stop the timer and display FPS information
-            self.fps.stop()
-            logger.log.cout("[INFO] elasped time: {:.2f}".format(self.fps.elapsed()))
-            logger.log.cout("[INFO] approx. FPS: {:.2f}".format(self.fps.fps()))
-            self.cam.release()
+            self.cam.stop()
             cv2.destroyAllWindows()

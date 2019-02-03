@@ -5,7 +5,7 @@ from labmodules import logger
 def main():
     try:
         logger.log.cout('Powering on the Robot!')
-        robot = terminator.Terminator('trainer/trainer.yml','Cascades/haarcascade_frontalface_default.xml',1)
+        robot = terminator.Terminator('trainer/trainer.yml','Cascades/haarcascade_frontalface_default.xml',0)
         #robot.greetings()
         robot.run()
     except Exception as e:

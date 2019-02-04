@@ -1,0 +1,10 @@
+name#George
+surname#Tsamis
+job#Student
+age#16
+team#Olympiakos
+friends#Kostas#Chris#Maria
+city#Lamia, Greece
+about#I like playing football
+food#pizza#pasta
+hobby#movies

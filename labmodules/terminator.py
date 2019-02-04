@@ -8,8 +8,10 @@ class Terminator:
 
     def salute(self,p):
         logger.log.cout(self.profiles[p]['name'])
-        sound.robotVoice.say('Hello mister {0} {1}'.format(self.profiles[p]['name'],self.profiles[p]['surname']))
-        sound.robotVoice.say('You are a {0} and you are {1} years old'.format(self.profiles[p]['job'],self.profiles[p]['age']))
+        sound.robotVoice.say('Hello mister {0} {1}'.format(self.profiles[p]['name'],self.profiles[p]['surname']),150)
+        time.sleep(0.6)
+        sound.robotVoice.say('You are a {0} and you are {1} years old'.format(self.profiles[p]['job'],self.profiles[p]['age']),190)
+        time.sleep(0.6)
         sound.robotVoice.say('Your favourit team is {0} and you live at {1}'.format(self.profiles[p]['team'],self.profiles[p]['city']))
         
     def loadProfiles(self):
@@ -41,7 +43,7 @@ class Terminator:
         
     def __init__(self,ymlPath,facecascadeXML,src=0):
         try:
-            msg = "Robot is initialising, please wait!"
+            msg = "Robot is powering on, please wait!"
             logger.log.cout(msg)
             sound.robotVoice.say(msg)
             
@@ -63,8 +65,6 @@ class Terminator:
             self.names = ['None', 'Yannis', 'George','Miltiades','Socrates','Stefanos']
             # Initialize and start realtime video capture
             self.cam = VideoCaptureAsync( src )
-            #self.cam.set( 3, 640 )  # set video widht
-            #self.cam.set( 4, 480 )  # set video height
             self.cam.start()
             logger.log.cout(" ... Camera ok")
             # Define min window size to be recognized as a face
@@ -79,7 +79,7 @@ class Terminator:
         logger.log.cout("Greetings from Robot")
         sound.robotVoice.say("Hello ladies and gentlement!")
         time.sleep(0.5)
-        sound.robotVoice.say("My name is Terinator and I have been created by LabSTEM robotics")
+        sound.robotVoice.say("My name is Terinator and I have been created by 'LabSTEM Robotics'",160)
 
     def run(self):
         try:
@@ -95,7 +95,7 @@ class Terminator:
                     minSize=(int( self.minW ), int( self.minH )),
                 )
                 for (x, y, w, h) in self.faces:
-                    cv2.rectangle( gray, (x, y), (x + w, y + h), (0, 255, 0), 2 )
+                    cv2.rectangle( img, (x, y), (x + w, y + h), (0, 255, 0), 2 )
                     self.id, self.confidence = self.recognizer.predict( gray[y:y + h, x:x + w] )
                     # Check if confidence is less them 100 ==> "0" is perfect match
                     if (self.confidence < 100):

@@ -16,7 +16,8 @@ class LabSound:
         except:
             logger.log.cout("Sound creation ERROR")
 
-    def say(self, message):
+    def say(self, message,speed=130):
+        self.engine.set('speed', str(speed))
         self.engine.say(message) #String to be spoken
         self.engine.talkback()
         

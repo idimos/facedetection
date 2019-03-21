@@ -11,12 +11,13 @@ class Terminator:
         sound.robotVoice.say('Hello mister {0} {1}'.format(self.profiles[p]['name'],self.profiles[p]['surname']))
         sound.robotVoice.say('You are a {0} and you are {1} years old'.format(self.profiles[p]['job'],self.profiles[p]['age']))
         sound.robotVoice.say('Your favourit team is {0} and you live at {1}'.format(self.profiles[p]['team'],self.profiles[p]['city']))
-        self.friends = [f for f in self.profiles.[p]['friends'].split("#")]
-        logger.log.cout(friends)
+        #self.friends = [f for f in str(self.profiles[p]['friends']).split("#")]
+        #logger.log.cout(friends)
         #sound.robotVoice.say('Your best friends are  '.)
         
     def loadProfiles(self):
         try:
+            logger.log.cout("Profiles start loading ...")
             self.profilepath = 'labmodules/personsProfiles'
             self.profileFiles = [os.path.join(self.profilepath,fn) for fn in os.listdir(self.profilepath)]
             logger.log.cout('loading profiles from {0}'.format(self.profilepath ))
@@ -66,8 +67,8 @@ class Terminator:
             self.names = ['None', 'Yannis', 'George','Miltiades','Socrates','Stefanos']
             # Initialize and start realtime video capture
             self.cam = VideoCaptureAsync( src )
-            #self.cam.set( 3, 640 )  # set video widht
-            #self.cam.set( 4, 480 )  # set video height
+            self.cam.set( 3, 800)  # set video widht
+            self.cam.set( 4, 600 )  # set video height
             self.cam.start()
             logger.log.cout(" ... Camera ok")
             # Define min window size to be recognized as a face
@@ -80,9 +81,9 @@ class Terminator:
     def greetings(self):
         '''Greeting message from Robot '''
         logger.log.cout("Greetings from Robot")
-        sound.robotVoice.say("Hello ladies and gentlement!")
+        sound.robotVoice.say("Welcome to Robotics Contest!")
         time.sleep(0.5)
-        sound.robotVoice.say("My name is Terinator and I have been created by LabSTEM robotics")
+        sound.robotVoice.say("My name is Terinator, and I have been created by LabSTEM robotics")
 
     def run(self):
         try:
@@ -108,6 +109,8 @@ class Terminator:
                         if self.personExists(self.id):
                             self.salute(self.id)
                             #print('I found {0}'.format(self.id))
+                        else:
+                            sound.robotVoice.say("Hey you, come here!")        
                             
                     else:
                         self.id = "unknown"

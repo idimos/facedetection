@@ -1,7 +1,7 @@
 name#Stefanos
-surname#Zacharopoulos
+surname#Zaharopoulos
 job#student
 age#14
 team#Olympiakos
 friends#Lefteris
-city#Λαμία
+city#Lamia
